@@ -1,5 +1,5 @@
-<div class="portal-login-container" fxLayoutAlign="center center" fxLayoutAlign.lt-sm="none">
-    
+<div class="portal-login-container portal-primary-bg" fxLayoutAlign="center center" fxLayoutAlign.lt-sm="none">
+  
   <mat-card class="portal-login-card mat-elevation-z"
     fxFlex="100"
     fxFlex.md="80"
@@ -10,13 +10,10 @@
       fxFlex.gt-sm="50%"
       fxLayout="column"
       fxLayoutAlign="space-between none"
-      class="portal-primary-bg">
+      class="portal-primary-bgx" style="padding: 0;">
       <div>
-        <mat-card-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-          <img class="portal-login-card__logo" src="assets/images/oxygenna.png"/>
-          <h1 i18n>Platform IT <br/> Customer portal</h1>
-        </mat-card-title>
-        <div>
+          <img style="width:100%;height:auto;" class="portal-login-card__logo" src="assets/images/platform-login.jpg"/>
+        <div style="padding:16px;" class="portal-primary-bxg">
           <p i18n>Welcome to our admin panel. Please login using the form or register for a new account using the button below.</p>
         </div>
       </div>
@@ -26,7 +23,7 @@
       fxFlex="auto"
       fxFlex.gt-sm="50%"
       fxLayout="column"
-      fxLayoutAlign="space-between none">
+      fxLayoutAlign="space-between none" class="login-section">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
         <mat-form-field>

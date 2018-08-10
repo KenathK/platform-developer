@@ -11,6 +11,9 @@ import { AuthGuard } from './auth.guard';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth.effects';
 import { SharedModule } from '../shared/shared.module';
+import { LayoutModule } from '@angular/cdk/layout';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor, ErrorInterceptor } from './token.interceptor';
 
 
 @NgModule({
@@ -21,7 +24,8 @@ import { SharedModule } from '../shared/shared.module';
         RouterModule.forChild([{path: '', component: LoginComponent}]),
         StoreModule.forFeature('auth', fromAuth.authReducer),
         EffectsModule.forFeature([AuthEffects]),
-        SharedModule
+        SharedModule,
+        LayoutModule
     ],
     declarations: [LoginComponent],
     exports: [
@@ -34,7 +38,17 @@ export class AuthModule {
             ngModule: AuthModule,
             providers: [
                 AuthService,
-                AuthGuard
+                AuthGuard,
+                {
+                    provide: HTTP_INTERCEPTORS,
+                    useClass: TokenInterceptor,
+                    multi: true
+                  },
+                  {
+                    provide: HTTP_INTERCEPTORS,
+                    useClass: ErrorInterceptor,
+                    multi: true
+                  },
             ]
         }
     }

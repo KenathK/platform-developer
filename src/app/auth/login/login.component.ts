@@ -8,6 +8,7 @@ import { AuthService } from '../auth.service';
 import { tap } from 'rxjs/operators';
 import { noop } from 'rxjs';
 import { Router } from '@angular/router';
+import { LayoutService } from '../../layout/layout.service';
 
 @Component({
   selector: 'login',
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private store: Store<AppState>,
     private auth: AuthService,
-    private router:Router
+    private router:Router,
+    private layoutService: LayoutService
     ) { }
 
   ngOnInit() {
@@ -34,16 +36,21 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.layoutService.setLoader(true);
+
     const val = this.loginForm.value;
     this.auth.login(val.email, val.password)
     .pipe(
       tap(data => {
         this.store.dispatch(new Login(data.token));
+        this.layoutService.setLoader(false);
         this.router.navigateByUrl('/dashboard');
       })
     ).subscribe(
       noop,
-      () => alert('Login failed')
+      () => {
+        this.layoutService.setLoader(false);
+      }
     );
   }
 

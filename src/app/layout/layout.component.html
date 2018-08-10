@@ -4,7 +4,9 @@
   <div fxLayout="column" fxFlexFill>
     <!-- top toolbar -->
 
-    <app-horizontal-menu></app-horizontal-menu>
+    <portal-layout-loader></portal-layout-loader>
+    
+    <app-horizontal-menu [userData]="user$ | async"></app-horizontal-menu>
 
     <div fxLayout="column" fxFlex="nogrow noshrink" class="portal-classic-content-wrapper portal-content-bg">
       <div fxFlexFill class="portal-classic-content" portalScrollTop>

@@ -6,6 +6,7 @@ import { LayoutComponent } from './layout.component';
 import { RouterModule } from '@angular/router';
 import { UserMenuComponent } from './components/user-menu/user-menu.component';
 import { LayoutService } from './layout.service';
+import { LayoutLoaderComponent } from './components/layout-loader/layout-loader.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { LayoutService } from './layout.service';
   declarations: [
     HorizontalMenuComponent,
     UserMenuComponent,
-    LayoutComponent
+    LayoutComponent,
+    LayoutLoaderComponent
   ],
   providers: [LayoutService]
 })

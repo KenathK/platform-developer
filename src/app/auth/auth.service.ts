@@ -13,8 +13,17 @@ export class AuthService {
 
     }
 
+    getToken() {
+        console.log(localStorage.getItem('token'));
+        return JSON.parse(localStorage.getItem('token'));
+    }
+
     login(email:string, password:string): Observable<any> {
         return this.http.post<any>('/api/auth/login', {email,password});
+    }
+
+    getUser(): Observable<any> {
+        return this.http.get<any>('/api/status');
     }
 
 }

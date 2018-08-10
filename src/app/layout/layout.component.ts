@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../reducers';
+import { UserDetails } from '../auth/auth.actions';
+import { user } from '../auth/auth.selectors';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'layout',
@@ -7,9 +12,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
-  constructor() { }
+  user$: Observable<object>;
+
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
+    this.store.dispatch(new UserDetails());
+
+    this.user$ = this.store.pipe(select(user));
   }
 
 }
