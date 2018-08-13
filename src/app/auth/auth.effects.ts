@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Login, AuthActionTypes, Logout, UserDetails, UserDetailsSuccess } from './auth.actions';
+import { AuthActionTypes, Logout, UserDetails, UserDetailsSuccess, RequestLogin, LoginSuccess } from './auth.actions';
 import { tap, mergeMap, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { defer, of } from 'rxjs';
@@ -10,17 +10,27 @@ import { AuthService } from './auth.service';
 @Injectable()
 export class AuthEffects {
 
+  @Effect()
+  requestLogin$ = this.actions$
+    .pipe(
+      ofType<RequestLogin>(AuthActionTypes.REQUEST_LOGIN),
+      mergeMap(action => this.authService.login(action.payload.email, action.payload.password)),
+      map(token => new LoginSuccess(token.token)),
+      tap(payload => {
+        this.router.navigateByUrl('/dashboard')
+      })
+  );
+
+
   @Effect({dispatch: false})
-  login$ = this.actions$.pipe(
-    ofType<Login>(AuthActionTypes.LoginAction),
-    tap(action => {
-      localStorage.setItem('token', JSON.stringify(action.payload))
-    })
+  LoginSuccess$ = this.actions$.pipe(
+    ofType<LoginSuccess>(AuthActionTypes.LOGIN_SUCCESS),
+    tap(action => localStorage.setItem('token', JSON.stringify(action.payload)))
   );
 
   @Effect({dispatch: false})
   logout$ = this.actions$.pipe(
-    ofType<Logout>(AuthActionTypes.LogoutAction),
+    ofType<Logout>(AuthActionTypes.LOGOUT),
     tap(() => {
       localStorage.removeItem('token');
       this.router.navigateByUrl('/login');
@@ -31,24 +41,10 @@ export class AuthEffects {
   init$ = defer(() => {
     const token = localStorage.getItem('token');
     if(token !== 'undefined' && token !== null){
-      return of(new Login(JSON.parse(token)));
+      return of(new LoginSuccess(JSON.parse(token)));
     }
     return of(new Logout());
   });
-
-  // @Effect()
-  // userDetails$ = this.actions$.pipe(
-  //   ofType<UserDetails>(AuthActionTypes.USER_DETAILS),
-  //   tap(action => {
-  //     console.log(action);
-  //     this.authService.getUser()
-  //   .pipe(
-  //     tap(data => {
-  //       return new UserDetailsSuccess(data);
-  //     })
-  //   )
-  //   })
-  // );
 
   @Effect()
   userDetails$ = this.actions$

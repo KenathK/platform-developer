@@ -18,3 +18,8 @@ export const user = createSelector(
     selectAuthState,
     auth => auth.user
 );
+
+export const isLoading = createSelector(
+    selectAuthState,
+    auth => auth.isPending
+);

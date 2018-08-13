@@ -2,24 +2,36 @@ import { Action } from '@ngrx/store';
 import { User } from '../entities/user';
 
 export enum AuthActionTypes {
-  LoginAction = '[Login] Action',
-  LogoutAction = '[Logout] Action',
-  USER_DETAILS = '[Auth User] Action',
+  REQUEST_LOGIN = '[Auth User] Request login',
+  LOGIN_SUCCESS = '[Auth User] Login Success Action',
+  LOGOUT = '[Auth User] Logout Action',
+  
+  USER_DETAILS = '[Auth User] Details Action',
   USER_DETAILS_SUCCESS = '[Auth User] Success'
 }
 
-export class Login implements Action {
 
-  readonly type = AuthActionTypes.LoginAction;
+export class RequestLogin implements Action {
+
+  readonly type = AuthActionTypes.REQUEST_LOGIN;
 
   constructor(public payload: any) {
 
   }
 }
 
+export class LoginSuccess implements Action {
+
+  readonly type = AuthActionTypes.LOGIN_SUCCESS;
+
+  constructor(public payload: any) {
+    
+  }
+}
+
 export class Logout implements Action {
 
-  readonly type = AuthActionTypes.LogoutAction;
+  readonly type = AuthActionTypes.LOGOUT;
 
 }
 
@@ -35,4 +47,8 @@ export class UserDetailsSuccess implements Action {
   }
 }
 
-export type AuthActions = Login | Logout | UserDetails | UserDetailsSuccess;
+export type AuthActions = RequestLogin 
+| LoginSuccess 
+| Logout 
+| UserDetails 
+| UserDetailsSuccess;

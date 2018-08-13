@@ -6,29 +6,40 @@ import { AuthActions, AuthActionTypes } from './auth.actions';
 export interface AuthState {
   loggedIn: boolean,
   token: string,
-  user: User
+  user: User,
+  isPending: boolean
 }
 
 export const initialState: AuthState = {
   loggedIn: false,
   token: undefined,
-  user: undefined
+  user: undefined,
+  isPending: false
 };
 
 export function authReducer(state = initialState, action: AuthActions): AuthState {
   switch (action.type) {
-    case AuthActionTypes.LoginAction:
+    
+    case AuthActionTypes.REQUEST_LOGIN:
+      return {
+        ...state,
+        isPending: true
+      }
+
+    case AuthActionTypes.LOGIN_SUCCESS:
       return {
         ...state,
         loggedIn: true,
-        token: action.payload
+        token: action.payload,
+        isPending: false
       }
     
-    case AuthActionTypes.LogoutAction:
+    case AuthActionTypes.LOGOUT:
       return {
         ...state,
         loggedIn: false,
-        token: undefined
+        token: undefined,
+        user: undefined
       }
     
     case AuthActionTypes.USER_DETAILS:

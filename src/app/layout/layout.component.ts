@@ -14,10 +14,12 @@ export class LayoutComponent implements OnInit {
 
   user$: Observable<object>;
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) { 
+    this.store.dispatch(new UserDetails());
+  }
 
   ngOnInit() {
-    this.store.dispatch(new UserDetails());
+    
 
     this.user$ = this.store.pipe(select(user));
   }
