@@ -1,5 +1,4 @@
 export const environment = {
   production: true,
-  gdaxURL: 'wss://ws-feed.gdax.com',
-  baseUrl: 'https://jsonplaceholder.typicode.com'
+  API_URL: 'http://52.14.155.143'
 };

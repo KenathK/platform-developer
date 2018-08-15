@@ -17,14 +17,13 @@ const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: './dashboard/dashboard.module#DashboardModule',
+      },
+      {
+        path: 'invitations',
+        loadChildren: './invitation/invitation.module#InvitationModule',
       }
     ],
   },
-  // {
-  //     path: 'dashboard',
-  //     loadChildren: './dashboard/dashboard.module#DashboardModule',
-  //     // canActivate: [],
-  // },
   {
     path: 'login',
     component: LoginComponent,

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { User } from '../../../entities/user';
 
 @Component({
   selector: 'user-menu',
@@ -7,7 +8,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 })
 export class UserMenuComponent implements OnInit {
 
-  @Input() user: Object = null;
+  @Input() user: User = null;
 
   @Output() logOutFlag = new EventEmitter<boolean>();
 
